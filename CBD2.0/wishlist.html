@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#1A1A1A">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Обране - effectCBD</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --sage-green: #C9A86A;
+            --sage-light: #D4B887;
+            --sage-dark: #A68A5C;
+            --cream-white: #1A1A1A;
+            --off-white: #2A2A2A;
+            --charcoal: #E8E8E8;
+            --charcoal-light: #B8B8B8;
+            --charcoal-dark: #0A0A0A;
+            --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-medium: 0 16px 64px rgba(0, 0, 0, 0.5);
+            --shadow-strong: 0 24px 96px rgba(0, 0, 0, 0.6);
+            --glow-gold: 0 0 30px rgba(201, 168, 106, 0.3), 0 0 60px rgba(201, 168, 106, 0.1);
+            --border-radius: 16px;
+            --border-radius-lg: 24px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: var(--cream-white);
+            color: var(--charcoal);
+            line-height: 1.7;
+            overflow-x: hidden;
+            font-weight: 500;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding-top: 100px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #2A2A2A 0%, #252525 100%);
+            border-bottom: 1px solid rgba(201, 168, 106, 0.2);
+            z-index: 1000;
+            padding: 20px 0;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #FFFFFF;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-accent {
+            color: #D4B887;
+        }
+
+        .back-link {
+            color: #D4B887;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+        }
+
+        .back-link:hover {
+            background: rgba(201, 168, 106, 0.1);
+            color: #C9A86A;
+        }
+
+        /* Wishlist Section */
+        .wishlist-section {
+            padding: 60px 0 120px;
+            min-height: calc(100vh - 100px);
+        }
+
+        .page-title {
+            font-size: clamp(44px, 5vw, 64px);
+            font-weight: 600;
+            color: #F5F5F5;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            text-shadow: 0 0 30px rgba(201, 168, 106, 0.2);
+        }
+
+        .page-subtitle {
+            font-size: 20px;
+            color: #B8B8B8;
+            margin-bottom: 60px;
+            font-weight: 600;
+        }
+
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 40px;
+        }
+
+        .wishlist-card {
+            background: linear-gradient(135deg, #2A2A2A 0%, #252525 100%);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            position: relative;
+        }
+
+        .wishlist-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-medium), var(--glow-gold);
+            border-color: rgba(201, 168, 106, 0.5);
+        }
+
+        .wishlist-image {
+            height: 280px;
+            background: linear-gradient(135deg, #1A1A1A 0%, rgba(201, 168, 106, 0.1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wishlist-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .wishlist-card:hover .wishlist-image img {
+            transform: scale(1.05);
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(26, 26, 26, 0.9);
+            border: 1px solid rgba(201, 168, 106, 0.3);
+            color: #C9A86A;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .remove-btn:hover {
+            background: #C9A86A;
+            color: #0A0A0A;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .wishlist-content {
+            padding: 32px;
+        }
+
+        .wishlist-title {
+            font-size: 26px;
+            font-weight: 600;
+            color: #F5F5F5;
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .wishlist-description {
+            color: #B8B8B8;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .wishlist-price {
+            font-size: 32px;
+            font-weight: 700;
+            color: #D4B887;
+            margin-bottom: 24px;
+            text-shadow: 0 0 20px rgba(212, 184, 135, 0.3);
+        }
+
+        .wishlist-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-order {
+            flex: 1;
+            background: linear-gradient(135deg, #C9A86A 0%, #D4B887 100%);
+            color: #0A0A0A;
+            padding: 14px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(201, 168, 106, 0.3);
+        }
+
+        .btn-order:hover {
+            background: linear-gradient(135deg, #D4B887 0%, #E5C998 100%);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium), 0 0 25px rgba(201, 168, 106, 0.5);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .empty-icon {
+            font-size: 80px;
+            color: #C9A86A;
+            margin-bottom: 32px;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 36px;
+            font-weight: 600;
+            color: #F5F5F5;
+            margin-bottom: 16px;
+        }
+
+        .empty-text {
+            font-size: 18px;
+            color: #B8B8B8;
+            margin-bottom: 40px;
+        }
+
+        .btn-catalog {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #C9A86A 0%, #D4B887 100%);
+            color: #0A0A0A;
+            padding: 16px 40px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(201, 168, 106, 0.3);
+        }
+
+        .btn-catalog:hover {
+            background: linear-gradient(135deg, #D4B887 0%, #E5C998 100%);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium), 0 0 25px rgba(201, 168, 106, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 80px;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .header {
+                padding: 16px 0;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .back-link {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+
+            .back-link span {
+                display: none;
+            }
+
+            .back-link i {
+                margin: 0;
+            }
+
+            .wishlist-section {
+                padding: 40px 0 80px;
+            }
+
+            .page-title {
+                font-size: clamp(32px, 7vw, 48px);
+                margin-bottom: 12px;
+            }
+
+            .page-subtitle {
+                font-size: 16px;
+                margin-bottom: 40px;
+            }
+
+            .wishlist-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .wishlist-card {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .wishlist-image {
+                height: 240px;
+            }
+
+            .remove-btn {
+                width: 36px;
+                height: 36px;
+                top: 12px;
+                right: 12px;
+                font-size: 16px;
+            }
+
+            .wishlist-content {
+                padding: 24px 20px;
+            }
+
+            .wishlist-title {
+                font-size: 22px;
+                margin-bottom: 10px;
+            }
+
+            .wishlist-description {
+                font-size: 15px;
+                margin-bottom: 16px;
+            }
+
+            .wishlist-price {
+                font-size: 26px;
+                margin-bottom: 20px;
+            }
+
+            .wishlist-actions {
+                gap: 10px;
+            }
+
+            .btn-order {
+                padding: 12px 20px;
+                font-size: 15px;
+            }
+
+            .empty-state {
+                padding: 60px 20px;
+            }
+
+            .empty-icon {
+                font-size: 60px;
+                margin-bottom: 24px;
+            }
+
+            .empty-title {
+                font-size: 28px;
+                margin-bottom: 12px;
+            }
+
+            .empty-text {
+                font-size: 16px;
+                margin-bottom: 32px;
+            }
+
+            .btn-catalog {
+                padding: 14px 32px;
+                font-size: 16px;
+            }
+
+            .modal-content {
+                padding: 32px 20px;
+                width: 95%;
+                max-height: 90vh;
+            }
+
+            .modal-close {
+                top: 16px;
+                right: 16px;
+                width: 36px;
+                height: 36px;
+                font-size: 20px;
+            }
+
+            .modal-title {
+                font-size: 26px;
+                margin-bottom: 20px;
+            }
+
+            .modal-product-info {
+                padding: 16px;
+                margin-bottom: 24px;
+            }
+
+            .modal-product-name {
+                font-size: 18px;
+            }
+
+            .modal-product-price {
+                font-size: 22px;
+            }
+
+            .order-form {
+                gap: 16px;
+            }
+
+            .form-group label {
+                font-size: 14px;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 12px 14px;
+                font-size: 14px;
+            }
+
+            .form-total {
+                padding: 16px;
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+
+            .form-total span:first-child {
+                font-size: 16px;
+            }
+
+            .total-price {
+                font-size: 24px;
+            }
+
+            .btn-submit {
+                padding: 16px 24px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 28px;
+            }
+
+            .wishlist-image {
+                height: 200px;
+            }
+
+            .modal-content {
+                padding: 24px 16px;
+            }
+        }
+
+        /* Order Modal Styles */
+        .order-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .order-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            position: relative;
+            background: linear-gradient(135deg, #2A2A2A 0%, #252525 100%);
+            border-radius: var(--border-radius-lg);
+            padding: 48px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 24px 96px rgba(0, 0, 0, 0.6), 0 0 30px rgba(201, 168, 106, 0.3);
+            border: 1px solid rgba(201, 168, 106, 0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: #B8B8B8;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .modal-close:hover {
+            background: rgba(201, 168, 106, 0.1);
+            color: #C9A86A;
+            transform: rotate(90deg);
+        }
+
+        .modal-title {
+            font-size: 32px;
+            font-weight: 600;
+            color: #F5F5F5;
+            margin-bottom: 24px;
+            text-shadow: 0 0 20px rgba(201, 168, 106, 0.2);
+        }
+
+        .modal-product-info {
+            background: rgba(201, 168, 106, 0.05);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 32px;
+            border: 1px solid rgba(201, 168, 106, 0.2);
+        }
+
+        .modal-product-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #F5F5F5;
+            margin-bottom: 8px;
+        }
+
+        .modal-product-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: #D4B887;
+        }
+
+        .order-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            color: #E8E8E8;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: rgba(26, 26, 26, 0.6);
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            border-radius: var(--border-radius);
+            padding: 14px 16px;
+            color: #E8E8E8;
+            font-size: 15px;
+            font-family: 'Cormorant Garamond', serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #C9A86A;
+            box-shadow: 0 0 0 3px rgba(201, 168, 106, 0.1);
+            background: rgba(26, 26, 26, 0.8);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #666;
+        }
+
+        .form-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: rgba(201, 168, 106, 0.05);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            margin-top: 12px;
+        }
+
+        .form-total span:first-child {
+            font-size: 18px;
+            color: #E8E8E8;
+            font-weight: 600;
+        }
+
+        .total-price {
+            font-size: 28px;
+            font-weight: 700;
+            color: #D4B887;
+            text-shadow: 0 0 20px rgba(212, 184, 135, 0.3);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #C9A86A 0%, #D4B887 100%);
+            color: #0A0A0A;
+            padding: 18px 32px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 700;
+            font-size: 17px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 8px;
+            box-shadow: 0 4px 15px rgba(201, 168, 106, 0.3);
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #D4B887 0%, #E5C998 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 64px rgba(0, 0, 0, 0.5), 0 0 25px rgba(201, 168, 106, 0.5);
+        }
+
+        .btn-submit:active {
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="CBD.html" class="logo">
+                    <span>effect</span><span class="logo-accent">CBD</span>
+                </a>
+                <a href="CBD.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Повернутися на головну</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Wishlist Section -->
+    <section class="wishlist-section">
+        <div class="container">
+            <h1 class="page-title">Обране</h1>
+            <p class="page-subtitle" id="wishlistCount">Завантаження...</p>
+            
+            <div id="wishlistContainer">
+                <!-- Wishlist items will be inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Modal -->
+    <div class="order-modal" id="orderModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="modal-title">Оформлення замовлення</h2>
+            <div class="modal-product-info" id="modalProductInfo">
+                <!-- Product info will be inserted here -->
+            </div>
+            <form class="order-form" id="orderForm">
+                <div class="form-group">
+                    <label for="customerName">Ім'я та прізвище *</label>
+                    <input type="text" id="customerName" name="customerName" required placeholder="Введіть ваше ім'я">
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerPhone">Телефон *</label>
+                    <input type="tel" id="customerPhone" name="customerPhone" required placeholder="+380 (XX) XXX-XX-XX">
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerEmail">Email</label>
+                    <input type="email" id="customerEmail" name="customerEmail" placeholder="your@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="deliveryMethod">Спосіб доставки *</label>
+                    <select id="deliveryMethod" name="deliveryMethod" required>
+                        <option value="">Оберіть спосіб доставки</option>
+                        <option value="nova-poshta">Нова Пошта</option>
+                        <option value="ukrposhta">Укрпошта</option>
+                        <option value="courier">Кур'єр по Києву</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerCity">Місто *</label>
+                    <input type="text" id="customerCity" name="customerCity" required placeholder="Введіть ваше місто">
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerAddress">Адреса доставки *</label>
+                    <textarea id="customerAddress" name="customerAddress" required placeholder="Вулиця, будинок, квартира або номер відділення"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerComment">Коментар до замовлення</label>
+                    <textarea id="customerComment" name="customerComment" placeholder="Додаткова інформація (необов'язково)"></textarea>
+                </div>
+                
+                <div class="form-total">
+                    <span>До сплати:</span>
+                    <span class="total-price" id="totalPrice">0 ₴</span>
+                </div>
+                
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-check-circle"></i>
+                    Підтвердити замовлення
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Get wishlist from localStorage
+        function getWishlist() {
+            const wishlist = localStorage.getItem('effectcbd_wishlist');
+            return wishlist ? JSON.parse(wishlist) : [];
+        }
+
+        // Save wishlist to localStorage
+        function saveWishlist(wishlist) {
+            localStorage.setItem('effectcbd_wishlist', JSON.stringify(wishlist));
+        }
+
+        // Remove item from wishlist
+        function removeFromWishlist(productId) {
+            let wishlist = getWishlist();
+            wishlist = wishlist.filter(item => item.id !== productId);
+            saveWishlist(wishlist);
+            renderWishlist();
+        }
+
+        // Render wishlist
+        function renderWishlist() {
+            const wishlist = getWishlist();
+            const container = document.getElementById('wishlistContainer');
+            const countText = document.getElementById('wishlistCount');
+            
+            if (wishlist.length === 0) {
+                countText.textContent = 'Ваш список обраного порожній';
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="far fa-heart"></i>
+                        </div>
+                        <h2 class="empty-title">Список обраного порожній</h2>
+                        <p class="empty-text">Додайте товари в обране, щоб не загубити їх</p>
+                        <a href="CBD.html#catalog" class="btn-catalog">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span>Перейти до каталогу</span>
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            
+            countText.textContent = `У вас ${wishlist.length} ${getProductWord(wishlist.length)} в обраному`;
+            
+            container.innerHTML = `
+                <div class="wishlist-grid">
+                    ${wishlist.map(product => `
+                        <div class="wishlist-card" data-id="${product.id}">
+                            <div class="wishlist-image">
+                                <button class="remove-btn" onclick="removeFromWishlist(${product.id})">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                ${product.image ? `<img src="${product.image}" alt="${product.title}">` : '<i class="fas fa-cannabis" style="font-size: 80px; color: #C9A86A; opacity: 0.3;"></i>'}
+                            </div>
+                            <div class="wishlist-content">
+                                <h3 class="wishlist-title">${product.title}</h3>
+                                <p class="wishlist-description">${product.description}</p>
+                                <div class="wishlist-price">${product.price}</div>
+                                <div class="wishlist-actions">
+                                    <button class="btn-order" onclick="openOrderModal('${product.title}', '${product.price}')">
+                                        <i class="fas fa-shopping-cart"></i>
+                                        <span>Замовити</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Get correct word form for product count
+        function getProductWord(count) {
+            const lastDigit = count % 10;
+            const lastTwoDigits = count % 100;
+            
+            if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+                return 'товарів';
+            }
+            
+            if (lastDigit === 1) {
+                return 'товар';
+            }
+            
+            if (lastDigit >= 2 && lastDigit <= 4) {
+                return 'товари';
+            }
+            
+            return 'товарів';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWishlist();
+            
+            // Modal close handlers
+            const modalClose = document.getElementById('modalClose');
+            const modalOverlay = document.getElementById('modalOverlay');
+            
+            if (modalClose) {
+                modalClose.addEventListener('click', closeOrderModal);
+            }
+            
+            if (modalOverlay) {
+                modalOverlay.addEventListener('click', closeOrderModal);
+            }
+            
+            // Close modal on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeOrderModal();
+                }
+            });
+            
+            // Order form submission
+            const orderForm = document.getElementById('orderForm');
+            if (orderForm) {
+                orderForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Disable submit button
+                    const submitBtn = this.querySelector('.btn-submit');
+                    const originalBtnText = submitBtn.innerHTML;
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Відправка...';
+                    
+                    // Get form data
+                    const formData = new FormData(this);
+                    
+                    // Add product info to form data
+                    formData.append('product', document.querySelector('.modal-product-name').textContent);
+                    formData.append('price', document.getElementById('totalPrice').textContent);
+                    
+                    // Send to PHP script
+                    fetch('send-order.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            closeOrderModal();
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Помилка відправки замовлення. Будь ласка, зателефонуйте нам: +380 (XX) XXX-XX-XX');
+                    })
+                    .finally(() => {
+                        // Re-enable submit button
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalBtnText;
+                    });
+                });
+            }
+        });
+
+        // Open order modal
+        function openOrderModal(productName, productPrice) {
+            const modal = document.getElementById('orderModal');
+            const modalProductInfo = document.getElementById('modalProductInfo');
+            const totalPrice = document.getElementById('totalPrice');
+            
+            if (!modal) {
+                return;
+            }
+            
+            // Set product info
+            modalProductInfo.innerHTML = `
+                <div class="modal-product-name">${productName}</div>
+                <div class="modal-product-price">${productPrice}</div>
+            `;
+            
+            // Set total price
+            totalPrice.textContent = productPrice;
+            
+            // Show modal
+            requestAnimationFrame(() => {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        }
+
+        // Close order modal
+        function closeOrderModal() {
+            const modal = document.getElementById('orderModal');
+            
+            if (!modal) {
+                return;
+            }
+            
+            // Smooth close animation
+            requestAnimationFrame(() => {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            
+            // Reset form after animation
+            setTimeout(() => {
+                const form = document.getElementById('orderForm');
+                if (form) {
+                    form.reset();
+                }
+            }, 300);
+        }
+    </script>
+
+</body>
+</html>
