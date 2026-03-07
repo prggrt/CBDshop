@@ -2602,6 +2602,37 @@
     </div>
 
     <script>
+        // Force video autoplay on iOS and all devices
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.querySelector('.hero-video');
+            if (video) {
+                // Try to play immediately
+                const playPromise = video.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // Autoplay started successfully
+                    }).catch(error => {
+                        // Autoplay was prevented, try again on user interaction
+                        document.addEventListener('touchstart', function() {
+                            video.play();
+                        }, { once: true });
+                        
+                        document.addEventListener('click', function() {
+                            video.play();
+                        }, { once: true });
+                    });
+                }
+                
+                // Additional iOS fix - play on page visibility change
+                document.addEventListener('visibilitychange', function() {
+                    if (!document.hidden && video.paused) {
+                        video.play();
+                    }
+                });
+            }
+        });
+
         // Mobile Menu Toggle
         const mobileToggle = document.getElementById('mobileToggle');
         const navMenu = document.getElementById('navMenu');
